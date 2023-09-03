@@ -60,7 +60,7 @@
 </body>
 
 <script type="text/javascript">
-    $(function() {
+    function dataForm() {
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
@@ -90,6 +90,10 @@
                 },
             ]
         });
+    }
+
+    $(function() {
+        dataForm();
     });
 </script>
 
@@ -123,7 +127,7 @@
             var id = $(this).attr('value');
             $.ajax({
                 type: "get",
-                url: "{{ route('users.view') }}",
+                url: "{{ route('users.edit') }}",
                 dataType: "json",
                 data: {
                     "id": id
@@ -141,5 +145,34 @@
     });
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('body').on('click', '.update', function() {
+            var id = $('#user_id').val();
+            var name = $('#user_name').val();
+            var email = $('#user_email').val();
+            $.ajax({
+                type: "get",
+                url: "{{ route('users.update') }}",
+                dataType: "json",
+                data: {
+                    "id": id,
+                    'name': name,
+                    'email': email,
+                },
+                success: function(data) {
+                    $('body').find('#modalView').modal('hide')
+                    webToast.Success({
+                        status: '',
+                        message: 'Data Updated!'
+                    });
+
+                    var table = $('.data-table').DataTable();
+                    table.draw();
+                },
+            });
+        });
+    });
+</script>
 
 </html>

@@ -19,3 +19,5 @@ Route::get('/', function () {
 });
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::get('view', [UserController::class, 'view'])->name('users.view');
+Route::get('edit', [UserController::class, 'edit'])->name('users.edit');
+Route::get('update', [UserController::class, 'update'])->name('users.update');

@@ -35,6 +35,27 @@ class UserController extends Controller
             ]);
         }
 
+    }
 
+    public function edit(Request $request)
+    {
+        $id = $request->id;
+        $data = User::find($id);
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('edit', compact('data'))->render()
+            ]);
+        }
+
+    }
+
+    public function update(Request $request){
+        $user = User::find($request->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->update();
+        return response()->json([
+            'status' => true,
+        ]);
     }
 }
